@@ -1,0 +1,11 @@
+{ 
+  "name":"random"
+  ,
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "scripts": {
+    "dev":"node server.js"
+  },
+  "type": "module"
+}
