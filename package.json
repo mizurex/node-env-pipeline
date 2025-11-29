@@ -1,11 +1,12 @@
-{ 
-  "name":"random"
-  ,
+{
+  "name": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "redis": "^5.10.0"
   },
   "scripts": {
-    "dev":"node server.js"
+    "dev": "node server.js",
+    "start": "node server.js"
   },
   "type": "module"
 }

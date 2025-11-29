@@ -2,15 +2,14 @@ FROM node:22
 
 WORKDIR /app
 
-# Copy only package files first
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the server file
 COPY server.js .
+COPY index.html .
+COPY rate-limit/ ./rate-limit/
+COPY routes/ ./routes/
+
+RUN npm install
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]
