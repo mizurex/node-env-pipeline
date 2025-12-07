@@ -49,7 +49,6 @@ app.post('/api/v1/data',async (req, res) => {
     res.status(500).json({ message: "Error adding data to queue", error: error.message });
   }
   
- 
 });
 
 
