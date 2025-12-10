@@ -1,0 +1,46 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  deploy-dev:
+    name: Deploy to DEV
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Deploy to DEV 
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}   
+          username: ${{ secrets.SSH_USER }}  
+          key: ${{ secrets.SSH_KEY }}       
+          script: |
+            cd /home/ubuntu/dev
+            git fetch origin
+            git checkout dev
+            git pull origin dev
+            npm install
+            pm2 restart app-dev || pm2 start /home/ubuntu/ecosystem.config.js --only app-dev
+
+  deploy-prod:
+    name: Deploy to PROD
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to PROD 
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}      
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/production-server
+            git fetch origin
+            git checkout main
+            git pull origin main
+            npm install
+            pm2 restart app-prod || pm2 start /home/ubuntu/ecosystem.config.js --only app-prod
